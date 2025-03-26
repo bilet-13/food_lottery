@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>要吃什麼？</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    .tabs button {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    #result {
+      margin-top: 30px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #d9534f;
+    }
+    #all-options {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #333;
+    }
+    #pick-again {
+      margin-top: 15px;
+      display: none;
+      font-size: 16px;
+      padding: 8px 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>今天要吃什麼？</h1>
+  <div class="tabs">
+    <button onclick="choose('weekday-lunch')">平日午餐</button>
+    <button onclick="choose('weekday-dinner')">平日晚餐</button>
+    <button onclick="choose('weekend')">假日</button>
+  </div>
+  <div id="result">請選擇一個時段</div>
+  <button id="pick-again" onclick="pickAgain()">再抽一次</button>
+  <div id="all-options"></div>
+
+  <script>
+    const foodOptions = {
+      'weekday-lunch': ['腿庫飯', '炒飯', '雞肉飯'],
+      'weekday-dinner': ['自助餐', '雞肉飯', '炒飯', '摩斯', '披薩', '豆漿店', '711/全家', '粥', '涼麵', '虱目魚', '滷味', '鹹酥雞', '鹹水雞', '雞排'],
+      'weekend': ['飯糰', '鬆餅', '韓式炸雞', '炒飯', '八方雲集', '雲南香', '滷味']
+    };
+
+    let currentList = [];
+    let currentType = '';
+
+    function choose(type) {
+      currentType = type;
+      currentList = foodOptions[type];
+      showAllOptions();
+      showResult(draw());
+    }
+
+    function pickAgain() {
+      if (!currentType) return;
+      showResult(draw());
+    }
+
+    function draw() {
+      const list = foodOptions[currentType];
+      const index = Math.floor(Math.random() * list.length);
+      return list[index];
+    }
+
+    function showResult(choice) {
+      document.getElementById('result').textContent = `吃這個 👉 ${choice}`;
+      document.getElementById('pick-again').style.display = 'inline-block';
+    }
+
+    function showAllOptions() {
+      const list = foodOptions[currentType];
+      document.getElementById('all-options').innerHTML = `選項有：${list.join('、')}`;
+    }
+  </script>
+</body>
+</html>
