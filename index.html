@@ -55,10 +55,12 @@
     let currentType = '';
 
     function choose(type) {
-      currentType = type;
-      currentList = foodOptions[type];
-      showAllOptions();
-      showResult(draw());
+      if (type != currentType) {
+        currentType = type;
+        currentList = foodOptions[type];
+        showAllOptions();
+        showResult(draw());
+      }
     }
 
     function pickAgain() {
