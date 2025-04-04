@@ -1,9 +1,7 @@
-# 🥢 食物抽籤器 (Food Lottery Picker)
-
-# 🥢 Food Lottery Picker
+# 🥢 Food Lottery Picker(食物抽籤器)
 
 ## 🚀 **Try it live:**  
-## [🍱 Visit food-lottery.vercel.app 🍱](https://food-lottery.vercel.app)
+### 🍱 Visit [food-lottery.vercel.app](https://food-lottery.vercel.app)
 
 A simple and fun web app to help you decide what to eat when you’re indecisive.
 
