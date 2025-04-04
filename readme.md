@@ -7,6 +7,10 @@
 
 A simple and fun web app to help you decide what to eat when you’re indecisive.
 
+## 🖼️ Screenshot
+
+![Screenshot](screenshot.png)
+
 ## 🔧 Features
 
 - Three selectable time categories:
@@ -24,10 +28,6 @@ A simple and fun web app to help you decide what to eat when you’re indecisive
 2. Click one of the category buttons: Weekday Lunch / Dinner / Weekend.
 3. Click the red button to randomly draw one food item.
 4. You can click "Pick Again" as many times as you want.
-
-## 🖼️ Screenshot
-
-![Screenshot](screenshot.png)
 
 ## 📁 Project Structure
 
