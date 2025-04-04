@@ -3,6 +3,7 @@
 # 🥢 Food Lottery Picker
 
 A simple and fun web app to help you decide what to eat when you’re indecisive.
+You can visit it in [food-lottery.vercel.app](https://food-lottery.vercel.app)
 
 ## 🔧 Features
 
