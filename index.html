@@ -2,86 +2,325 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <title>要吃什麼？</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>今天要吃什麼？</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary-color: #ff7043;
+      --secondary-color: #26a69a;
+      --dark-color: #455a64;
+      --light-color: #eceff1;
+    }
+    
     body {
-      font-family: sans-serif;
-      text-align: center;
-      margin-top: 50px;
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #f5f5f5;
+      background-image: linear-gradient(135deg, #f5f5f5 0%, #e0f7fa 100%);
+      min-height: 100vh;
     }
-    .tabs button {
-      margin: 5px;
-      padding: 10px 20px;
-      font-size: 16px;
+    
+    .app-container {
+      max-width: 600px;
+      padding: 2rem;
+      margin: 3rem auto;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      background-color: white;
+      position: relative;
+      overflow: hidden;
     }
+    
+    .app-container::before {
+      content: "";
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-color: var(--light-color);
+      opacity: 0.5;
+      z-index: 0;
+    }
+    
+    h1 {
+      color: var(--dark-color);
+      font-weight: 700;
+      margin-bottom: 2rem;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h1::after {
+      content: "";
+      position: absolute;
+      width: 50%;
+      height: 3px;
+      background-color: var(--primary-color);
+      bottom: -10px;
+      left: 25%;
+    }
+    
+    .btn-meal {
+      background-color: white;
+      color: var(--dark-color);
+      border: 2px solid var(--light-color);
+      border-radius: 30px;
+      padding: 0.5rem 1.5rem;
+      margin: 0.5rem;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+    
+    .btn-meal:hover, .btn-meal:focus {
+      background-color: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(255, 112, 67, 0.4);
+    }
+    
+    .btn-meal:active {
+      transform: translateY(-1px);
+    }
+    
+    .btn-active {
+      background-color: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+    
+    #result-container {
+      margin-top: 2.5rem;
+      padding: 1.5rem;
+      background-color: var(--light-color);
+      border-radius: 12px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
     #result {
-      margin-top: 30px;
-      font-size: 24px;
-      font-weight: bold;
-      color: #d9534f;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--dark-color);
+      margin: 0.5rem 0;
+      transition: all 0.3s ease;
     }
-    #all-options {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #333;
+    
+    .result-highlight {
+      color: var(--primary-color);
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      background-color: white;
+      border-radius: 8px;
+      margin-left: 0.5rem;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     }
+    
     #pick-again {
-      margin-top: 15px;
-      display: none;
-      font-size: 16px;
-      padding: 8px 16px;
+      background-color: var(--secondary-color);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 0.5rem 1.5rem;
+      margin-top: 1.5rem;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+    
+    #pick-again:hover {
+      background-color: #2bbbad;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(38, 166, 154, 0.4);
+    }
+    
+    #pick-again:active {
+      transform: translateY(0);
+    }
+    
+    #all-options {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background-color: rgba(236, 239, 241, 0.5);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      color: var(--dark-color);
+      line-height: 1.6;
+    }
+    
+    .option-tag {
+      display: inline-block;
+      background-color: white;
+      padding: 0.3rem 0.8rem;
+      margin: 0.2rem;
+      border-radius: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+    }
+    
+    .option-tag:hover {
+      background-color: var(--primary-color);
+      color: white;
+      transform: translateY(-2px);
+    }
+    
+    .food-icon {
+      margin-right: 0.5rem;
+      color: var(--primary-color);
+    }
+    
+    @media (max-width: 576px) {
+      .app-container {
+        margin: 1rem;
+        padding: 1.5rem;
+      }
+      
+      h1 {
+        font-size: 1.5rem;
+      }
+      
+      .btn-meal {
+        font-size: 0.9rem;
+        padding: 0.4rem 1.2rem;
+      }
+      
+      #result {
+        font-size: 1.5rem;
+      }
+    }
+    
+    /* Animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .animated {
+      animation: fadeIn 0.5s ease-out;
     }
   </style>
 </head>
 <body>
-  <h1>今天要吃什麼？</h1>
-  <div class="tabs">
-    <button onclick="choose('weekday-lunch')">平日午餐</button>
-    <button onclick="choose('weekday-dinner')">平日晚餐</button>
-    <button onclick="choose('weekend')">假日</button>
+  <div class="container">
+    <div class="app-container animated">
+      <h1><i class="fas fa-utensils food-icon"></i>今天要吃什麼？</h1>
+      
+      <div class="tabs d-flex flex-wrap justify-content-center">
+        <button class="btn btn-meal" id="btn-weekday-lunch" onclick="choose('weekday-lunch')">
+          <i class="far fa-sun me-1"></i>平日午餐
+        </button>
+        <button class="btn btn-meal" id="btn-weekday-dinner" onclick="choose('weekday-dinner')">
+          <i class="far fa-moon me-1"></i>平日晚餐
+        </button>
+        <button class="btn btn-meal" id="btn-weekend" onclick="choose('weekend')">
+          <i class="fas fa-calendar-alt me-1"></i>假日
+        </button>
+      </div>
+      
+      <div id="result-container">
+        <p id="initial-text" class="text-center text-muted">
+          <i class="fas fa-hand-point-up"></i> 請選擇一個時段
+        </p>
+        <div id="result" class="text-center" style="display: none;">
+          吃這個 <span class="result-highlight"><i class="fas fa-bowl-food me-2"></i><span id="result-food"></span></span>
+        </div>
+        <div class="text-center">
+          <button id="pick-again" class="btn" onclick="pickAgain()" style="display: none;">
+            <i class="fas "></i>再抽一次
+          </button>
+        </div>
+      </div>
+      
+      <div id="all-options" style="display: none;"></div>
+    </div>
   </div>
-  <div id="result">請選擇一個時段</div>
-  <button id="pick-again" onclick="pickAgain()">再抽一次</button>
-  <div id="all-options"></div>
 
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
   <script>
     const foodOptions = {
       'weekday-lunch': ['腿庫飯', '炒飯', '雞肉飯'],
       'weekday-dinner': ['自助餐', '雞肉飯', '炒飯', '摩斯', '披薩', '豆漿店', '711/全家', '粥', '涼麵', '虱目魚', '滷味', '鹹酥雞', '鹹水雞', '雞排'],
       'weekend': ['飯糰', '鬆餅', '韓式炸雞', '炒飯', '八方雲集', '雲南香', '滷味']
     };
-
+    
     let currentList = [];
     let currentType = '';
-
+    
     function choose(type) {
-      if (type != currentType) {
+      // Reset active button state
+      document.querySelectorAll('.btn-meal').forEach(btn => {
+        btn.classList.remove('btn-active');
+      });
+      
+      // Set active button
+      document.getElementById(`btn-${type}`).classList.add('btn-active');
+      
+      // Update state
+      if (type !== currentType) {
         currentType = type;
         currentList = foodOptions[type];
         showAllOptions();
-        showResult(draw());
       }
+      
+      // Hide initial text
+      document.getElementById('initial-text').style.display = 'none';
+      
+      // Show result
+      showResult(draw());
+      
+      // Add animation
+      const resultContainer = document.getElementById('result-container');
+      resultContainer.classList.remove('animated');
+      void resultContainer.offsetWidth; // Trigger reflow
+      resultContainer.classList.add('animated');
     }
-
+    
     function pickAgain() {
       if (!currentType) return;
       showResult(draw());
+      
+      // Add animation to result only
+      const result = document.getElementById('result');
+      result.classList.remove('animated');
+      void result.offsetWidth; // Trigger reflow
+      result.classList.add('animated');
     }
-
+    
     function draw() {
       const list = foodOptions[currentType];
       const index = Math.floor(Math.random() * list.length);
       return list[index];
     }
-
+    
     function showResult(choice) {
-      document.getElementById('result').textContent = `吃這個 👉 ${choice}`;
+      const resultElement = document.getElementById('result');
+      document.getElementById('result-food').textContent = choice;
+      resultElement.style.display = 'block';
       document.getElementById('pick-again').style.display = 'inline-block';
     }
-
+    
     function showAllOptions() {
       const list = foodOptions[currentType];
-      document.getElementById('all-options').innerHTML = `選項有：${list.join('、')}`;
+      const allOptionsContainer = document.getElementById('all-options');
+      
+      let tagsHtml = '<div class="mb-2 text-muted"><i class="fas fa-list me-2"></i>選項有：</div><div>';
+      list.forEach(option => {
+        tagsHtml += `<span class="option-tag">${option}</span> `;
+      });
+      tagsHtml += '</div>';
+      
+      allOptionsContainer.innerHTML = tagsHtml;
+      allOptionsContainer.style.display = 'block';
+      allOptionsContainer.classList.remove('animated');
+      void allOptionsContainer.offsetWidth; // Trigger reflow
+      allOptionsContainer.classList.add('animated');
     }
   </script>
 </body>
